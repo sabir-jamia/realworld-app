@@ -1,14 +1,31 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Home from "../views/Home";
+import HomeGlobal from "../views/HomeGlobal";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home
+    component: Home,
+    children: [
+      {
+        path: "",
+        name: "home",
+        component: HomeGlobal
+      },
+      {
+        path: "my-feed",
+        name: "home-my-feed",
+        component: () => import("../views/HomeMyFeed")
+      },
+      {
+        path: "feed/:tag",
+        name: "home-tag",
+        component: () => import("../views/HomeTag")
+      }
+    ]
   },
   {
     path: "/login",
@@ -47,10 +64,20 @@ const routes = [
       import(/* webpackChunName: "article" */ "../views/Article.vue")
   },
   {
-    path: "/:username",
-    name: "Profile",
-    compoent: () =>
-      import(/* webpackChunName: "profile" */ "../views/Profile.vue")
+    path: "/@:username",
+    component: () => import("../views/Profile"),
+    children: [
+      {
+        path: "",
+        name: "profile",
+        component: () => import("../views/ProfileArticles")
+      },
+      {
+        path: "favorites",
+        name: "profile-favorites",
+        component: () => import("../views/ProfileFavorited")
+      }
+    ]
   }
 ];
 

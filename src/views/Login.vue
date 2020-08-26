@@ -58,6 +58,7 @@ export default {
         })
         .then(() => {
           this.errors = [];
+          this.$router.push("/");
         })
         .catch(err => {
           this.errors.push(err);
