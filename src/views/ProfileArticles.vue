@@ -11,12 +11,12 @@ export default {
   },
   computed: {
     ...mapGetters({
-      articles: "articles/articles",
+      articles: "home/articles",
       profile: "users/profile"
     })
   },
   created() {
-    this.$store.dispatch("articles/getArticles", {
+    this.$store.dispatch("home/getArticles", {
       author: this.profile.username,
       page: 1
     });

@@ -4,7 +4,7 @@ export const api = axios.create({
   baseURL: "http://localhost:3000/api",
   headers: {
     Authorization:
-      "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmNDc2ZDMwNDYxYjNiNTgzMTllYWM3YSIsInVzZXJuYW1lIjoic2FiaXJqbWkiLCJleHAiOjE2MDM3MDQ2NTgsImlhdCI6MTU5ODUyMDY1OH0.4x_Meu0Sv2yyWIFzkHNYZEnLw6zCpoxHmfy5EjKsxTY"
+      "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmNDc2ZDMwNDYxYjNiNTgzMTllYWM3YSIsInVzZXJuYW1lIjoic2FiaXJqbWkiLCJleHAiOjE2MDM3MTExMDQsImlhdCI6MTU5ODUyNzEwNH0.IGjFbtPPFRUO8XKRdLMj71Mxm81Xvx5EFUtHQYsliGY"
   }
 });
 

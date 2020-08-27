@@ -26,68 +26,27 @@
 
       <div class="row">
         <div class="col-xs-12 col-md-8 offset-md-2">
-          <form class="card comment-form">
+          <form @submit.prevent class="card comment-form">
             <div class="card-block">
               <textarea
                 class="form-control"
                 placeholder="Write a comment..."
                 rows="3"
+                v-model="activeComment"
               ></textarea>
             </div>
             <div class="card-footer">
-              <img
-                src="http://i.imgur.com/Qr71crq.jpg"
-                class="comment-author-img"
-              />
-              <button class="btn btn-sm btn-primary">
+              <img :src="article.author.image" class="comment-author-img" />
+              <button @click="storeComment" class="btn btn-sm btn-primary">
                 Post Comment
               </button>
             </div>
           </form>
-
-          <div class="card">
-            <div class="card-block">
-              <p class="card-text">
-                With supporting text below as a natural lead-in to additional
-                content.
-              </p>
-            </div>
-            <div class="card-footer">
-              <a href="" class="comment-author">
-                <img
-                  src="http://i.imgur.com/Qr71crq.jpg"
-                  class="comment-author-img"
-                />
-              </a>
-              &nbsp;
-              <a href="" class="comment-author">Jacob Schmidt</a>
-              <span class="date-posted">Dec 29th</span>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-block">
-              <p class="card-text">
-                With supporting text below as a natural lead-in to additional
-                content.
-              </p>
-            </div>
-            <div class="card-footer">
-              <a href="" class="comment-author">
-                <img
-                  src="http://i.imgur.com/Qr71crq.jpg"
-                  class="comment-author-img"
-                />
-              </a>
-              &nbsp;
-              <a href="" class="comment-author">Jacob Schmidt</a>
-              <span class="date-posted">Dec 29th</span>
-              <span class="mod-options">
-                <i class="ion-edit"></i>
-                <i class="ion-trash-a"></i>
-              </span>
-            </div>
-          </div>
+          <ArticleComment
+            v-for="comment of comments"
+            :key="comment.id"
+            :comment="comment"
+          />
         </div>
       </div>
     </div>
@@ -96,20 +55,39 @@
 <script>
 import { mapGetters } from "vuex";
 import ArticleMeta from "../components/ArticleMeta";
+import ArticleComment from "../components/ArticleComment";
 
 export default {
   name: "Article",
-  components: { ArticleMeta },
+  components: { ArticleMeta, ArticleComment },
+  data() {
+    return { activeComment: "" };
+  },
   computed: {
     ...mapGetters({
-      article: "article/article"
+      article: "article/article",
+      comments: "article/comments"
     }),
     slug() {
       return this.$route.params.slug;
     }
   },
+  methods: {
+    storeComment() {
+      this.$store
+        .dispatch("article/storeComment", {
+          comment: { body: this.activeComment },
+          slug: this.article.slug
+        })
+        .then(() => {
+          this.activeComment = "";
+        });
+    }
+  },
   created() {
-    this.$store.dispatch("article/getArticle", this.slug);
+    this.$store.dispatch("article/getArticle", this.slug).then(() => {
+      this.$store.dispatch("article/getComments", this.article.slug);
+    });
   }
 };
 </script>

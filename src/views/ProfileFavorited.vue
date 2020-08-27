@@ -10,13 +10,10 @@ export default {
     ArticleList
   },
   computed: {
-    ...mapGetters({
-      articles: "articles/articles",
-      profile: "users/profile"
-    })
+    ...mapGetters({ articles: "home/articles", profile: "users/profile" })
   },
   created() {
-    this.$store.dispatch("articles/getArticles", {
+    this.$store.dispatch("home/getArticles", {
       page: 1,
       favorited: this.profile.username
     });

@@ -65,7 +65,7 @@ export default {
       username: "users/username",
       user: "users/user",
       profile: "users/profile",
-      articles: "articles/articles"
+      articles: "home/articles"
     })
   }
 };
