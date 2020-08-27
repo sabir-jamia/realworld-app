@@ -40,6 +40,18 @@ const actions = {
     const { comment, slug } = payload;
     await api.post(`/articles/${slug}/comments`, { comment });
     dispatch("getComments", slug);
+  },
+
+  async addFavorite({ commit }, payload) {
+    const { slug } = payload;
+    const response = await api.post(`/articles/${slug}/favorite`);
+    commit("setArticle", response.data);
+  },
+
+  async removeFavorite({ commit }, payload) {
+    const { slug } = payload;
+    const response = await api.delete(`/articles/${slug}/favorite`);
+    commit("setArticle", response.data);
   }
 };
 

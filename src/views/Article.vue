@@ -3,7 +3,7 @@
     <div class="banner">
       <div class="container">
         <h1>{{ article.title }}</h1>
-        <ArticleMeta :author="article.author" :createdAt="article.createdAt" />
+        <ArticleMeta :article="article" />
       </div>
     </div>
 
@@ -21,7 +21,7 @@
       <hr />
 
       <div class="article-actions">
-        <ArticleMeta :author="article.author" :createdAt="article.createdAt" />
+        <ArticleMeta :article="article" />
       </div>
 
       <div class="row">
