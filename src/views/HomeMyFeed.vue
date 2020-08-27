@@ -9,10 +9,10 @@ export default {
   name: "home-my-feed",
   components: { ArticleList },
   computed: {
-    ...mapGetters({ articles: "articles/articles" })
+    ...mapGetters({ articles: "home/articles" })
   },
   created() {
-    this.$store.dispatch("articles/getUserFeedArticles");
+    this.$store.dispatch("home/getUserFeedArticles");
   }
 };
 </script>

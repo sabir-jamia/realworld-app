@@ -30,38 +30,32 @@ const routes = [
   {
     path: "/login",
     name: "Login",
-    component: () =>
-      import(/* webpackChunkName: "login" */ "../views/Login.vue")
+    component: () => import("../views/Login")
   },
   {
     path: "/register",
     name: "Register",
-    component: () =>
-      import(/* webpackChunkName: "register" */ "../views/Register.vue")
+    component: () => import("../views/Register")
   },
   {
     path: "/settings",
     name: "Settings",
-    component: () =>
-      import(/* webpackChunName: "settings" */ "../views/Settings.vue")
+    component: () => import("../views/Settings")
   },
   {
     path: "/editor",
-    name: "EditorNew",
-    component: () =>
-      import(/* webpackChunName: "editor_new" */ "../views/ArticleCreate.vue")
+    name: "article-new",
+    component: () => import("../views/ArticleCreate")
   },
   {
-    path: "/editor/:article-slug",
-    name: "EditorEdit",
-    component: () =>
-      import(/* webpackChunName: "editor_edit" */ "../views/ArticleEdit.vue")
+    path: "/editor/:slug",
+    name: "article-edit",
+    component: () => import("../views/ArticleEdit")
   },
   {
-    path: "/article/:article-slug",
-    name: "Article",
-    component: () =>
-      import(/* webpackChunName: "article" */ "../views/Article.vue")
+    path: "/articles/:slug",
+    name: "article",
+    component: () => import("../views/Article")
   },
   {
     path: "/@:username",

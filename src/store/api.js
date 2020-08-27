@@ -1,10 +1,10 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "https://conduit.productionready.io/api",
+  baseURL: "http://localhost:3000/api",
   headers: {
     Authorization:
-      "Token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6OTk5NTYsInVzZXJuYW1lIjoic2FiaXItam1pIiwiZXhwIjoxNjAzNjA4ODA4fQ.zvdC311BhqZcmRIoQ1u08_tbPQXRLw6k1gzbiGL7mYY"
+      "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmNDc2ZDMwNDYxYjNiNTgzMTllYWM3YSIsInVzZXJuYW1lIjoic2FiaXJqbWkiLCJleHAiOjE2MDM3MDQ2NTgsImlhdCI6MTU5ODUyMDY1OH0.4x_Meu0Sv2yyWIFzkHNYZEnLw6zCpoxHmfy5EjKsxTY"
   }
 });
 

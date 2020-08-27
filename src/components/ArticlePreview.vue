@@ -14,11 +14,11 @@
         <i class="ion-heart"></i> 29
       </button>
     </div>
-    <a href="" class="preview-link">
+    <router-link :to="`/articles/${article.slug}`" class="preview-link">
       <h1>{{ article.title }}</h1>
       <p>{{ article.body }}</p>
       <span>Read more...</span>
-    </a>
+    </router-link>
   </div>
 </template>
 

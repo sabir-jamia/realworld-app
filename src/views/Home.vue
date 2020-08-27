@@ -29,13 +29,13 @@
                   Global Feed
                 </router-link>
               </li>
-              <li v-if="tag" class="nav-item">
+              <li v-if="currentTag" class="nav-item">
                 <router-link
                   :to="{ name: 'home-tag' }"
                   exact-active-class="active"
                   class="nav-link"
                 >
-                  #{{ tag }}
+                  #{{ currentTag }}
                 </router-link>
               </li>
             </ul>
@@ -47,10 +47,12 @@
             <p>Popular Tags</p>
             <div class="tag-list">
               <router-link
-                :to="`/feed/${'programming'}`"
+                v-for="tag of tags"
+                :key="tag"
+                :to="`/feed/${tag}`"
                 class="tag-pill tag-default"
               >
-                programming
+                {{ tag }}
               </router-link>
             </div>
           </div>
@@ -66,10 +68,13 @@ import { mapGetters } from "vuex";
 export default {
   name: "home",
   computed: {
-    ...mapGetters({ username: "users/username" }),
-    tag() {
+    ...mapGetters({ username: "users/username", tags: "home/tags" }),
+    currentTag() {
       return this.$route.params.tag;
     }
+  },
+  created() {
+    this.$store.dispatch("home/getTags");
   }
 };
 </script>
