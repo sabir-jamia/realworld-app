@@ -52,18 +52,11 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "Profile",
-  components: {
-    // ArticleList
-  },
   created() {
-    // TODO: remove after dev
-    this.$store.dispatch("users/getUser");
     this.$store.dispatch("users/loadProfile", this.$route.params);
   },
   computed: {
     ...mapGetters({
-      username: "users/username",
-      user: "users/user",
       profile: "users/profile",
       articles: "home/articles"
     })
