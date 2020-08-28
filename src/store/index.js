@@ -4,7 +4,7 @@ import Vuex from "vuex";
 import users from "../store/modules/users";
 import article from "../store/modules/article";
 import home from "../store/modules/home";
-import { setToken } from "./api";
+import { clearToken, setToken } from "./api";
 
 Vue.use(Vuex);
 
@@ -17,8 +17,13 @@ function initializeToken(store) {
 
   store.subscribe(mutation => {
     if (mutation.type == "users/setUser") {
-      localStorage.setItem("jwt", mutation.payload.user.token);
       setToken(mutation.payload.user.token);
+      localStorage.setItem("jwt", mutation.payload.user.token);
+    }
+
+    if (mutation.type == "users/clearUser") {
+      clearToken();
+      localStorage.removeItem("jwt");
     }
   });
 }

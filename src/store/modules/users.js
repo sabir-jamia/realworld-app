@@ -1,8 +1,8 @@
-import { api } from "../api";
+import { api, clearToken } from "../api";
 
 const state = {
   user: {
-    token: "",
+    token: null,
     username: null
   },
   profile: null
@@ -56,6 +56,9 @@ const actions = {
 
     const response = await api.put(uri, user);
     commit("setUser", response.data);
+  },
+  async logoutUser({ commit }) {
+    commit("clearUser");
   }
 };
 
@@ -66,8 +69,8 @@ const mutations = {
   setProfile(state, { profile }) {
     state.profile = profile;
   },
-  setToken(state, payload) {
-    state.user.token = payload;
+  clearUser(state) {
+    state.user = { token: null, username: null };
   }
 };
 

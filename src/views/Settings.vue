@@ -54,29 +54,34 @@
               </button>
             </fieldset>
           </form>
+          <!-- Line break for logout button -->
+          <hr />
+          <button @click="logout" class="btn btn-outline-danger">
+            Or click here to logout.
+          </button>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "Settings",
   computed: {
-    user() {
-      return this.$store.getters["users/user"] || {};
-    }
+    ...mapGetters({ user: "users/user" })
   },
   methods: {
     updateSettings() {
       this.$store.dispatch("users/updateUser", this.user).then(() => {
         this.$router.push("/");
       });
+    },
+    logout() {
+      this.$store.dispatch("users/logoutUser").then(() => {
+        this.$router.push("/");
+      });
     }
-  },
-  created() {
-    // TODO: remove after dev
-    this.$store.dispatch("users/getUser");
   }
 };
 </script>
