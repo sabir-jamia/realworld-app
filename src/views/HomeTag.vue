@@ -11,13 +11,13 @@ export default {
     ArticleList
   },
   computed: {
-    ...mapGetters({ articles: "articles/articles" }),
+    ...mapGetters({ articles: "home/articles" }),
     tag() {
       return this.$route.params.tag;
     }
   },
   created() {
-    this.$store.dispatch("articles/getArticles", { tag: this.tag });
+    this.$store.dispatch("home/getArticles", { tag: this.tag });
   }
 };
 </script>

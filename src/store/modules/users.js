@@ -1,21 +1,21 @@
-import { api, clearToken } from "../api";
+import { api } from "../api";
 
 const state = {
   user: {
     token: null,
-    username: null
-  },
-  profile: null
+    username: null,
+    isAuthenticated: false
+  }
 };
 
 const getters = {
   username(state) {
     return state.user.username;
   },
-  profile(state) {
-    return state.profile;
+  isAuthenticated() {
+    return state.user.username != null;
   },
-  user(state) {
+  currentUser(state) {
     return state.user;
   }
 };
@@ -42,32 +42,27 @@ const actions = {
       throw e;
     }
   },
-  async loadProfile({ commit }, { username }) {
-    const uri = `/profiles/${username}`;
-    const response = await api.get(uri);
-    commit("setProfile", response.data);
-  },
   async updateUser({ commit }, { email, username, password, image, bio }) {
-    const uri = "/user";
     const user = { email, username, image, bio };
     if (password) {
       user.password = password;
     }
 
-    const response = await api.put(uri, user);
+    const response = await api.put("/user", user);
     commit("setUser", response.data);
   },
   async logoutUser({ commit }) {
     commit("clearUser");
+  },
+  async storeUser(state, payload) {
+    const { user } = payload;
+    await api.post("/users", { user });
   }
 };
 
 const mutations = {
   setUser(state, { user }) {
     state.user = user;
-  },
-  setProfile(state, { profile }) {
-    state.profile = profile;
   },
   clearUser(state) {
     state.user = { token: null, username: null };

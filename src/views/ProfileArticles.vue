@@ -12,7 +12,7 @@ export default {
   computed: {
     ...mapGetters({
       articles: "home/articles",
-      profile: "users/profile"
+      profile: "profile/profile"
     })
   },
   created() {

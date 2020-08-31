@@ -4,6 +4,7 @@ import Vuex from "vuex";
 import users from "../store/modules/users";
 import article from "../store/modules/article";
 import home from "../store/modules/home";
+import profile from "../store/modules/profile";
 import { clearToken, setToken } from "./api";
 
 Vue.use(Vuex);
@@ -33,6 +34,7 @@ export default new Vuex.Store({
   modules: {
     home,
     users,
-    article
+    article,
+    profile
   }
 });

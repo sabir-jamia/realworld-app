@@ -1,16 +1,26 @@
 <template>
-  <div v-if="profile" class="profile-page">
+  <div class="profile-page">
     <div class="user-info">
       <div class="container">
         <div class="row">
           <div class="col-xs-12 col-md-10 offset-md-1">
-            <img :src="profile.image || ''" class="user-img" />
+            <img :src="profile.image" class="user-img" />
             <h4>{{ profile.username }}</h4>
-            <p v-if="profile.bio">{{ profile.bio }}</p>
-            <button class="btn btn-sm btn-outline-secondary action-btn">
-              <i class="ion-plus-round"></i>
-              &nbsp; Follow {{ profile.username }}
-            </button>
+            <p>{{ profile.bio }}</p>
+            <div v-if="isCurrentUser">
+              <router-link
+                to="/settings"
+                class="btn btn-sm btn-outline-secondary action-btn"
+              >
+                <i class="io-gear-a"></i>Edit Profile Settings
+              </router-link>
+            </div>
+            <div v-else>
+              <button class="btn btn-sm btn-outline-secondary action-btn">
+                <i class="ion-plus-round"></i>
+                &nbsp; Follow {{ profile.username }}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -53,13 +63,16 @@ import { mapGetters } from "vuex";
 export default {
   name: "Profile",
   created() {
-    this.$store.dispatch("users/loadProfile", this.$route.params);
+    this.$store.dispatch("profile/getProfile", this.$route.params);
   },
   computed: {
     ...mapGetters({
-      profile: "users/profile",
-      articles: "home/articles"
-    })
+      currentUser: "users/currentUser",
+      profile: "profile/profile"
+    }),
+    isCurrentUser() {
+      return this.profile.username == this.currentUser.username;
+    }
   }
 };
 </script>

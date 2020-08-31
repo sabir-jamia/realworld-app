@@ -43,11 +43,7 @@
 export default {
   name: "login",
   data: function() {
-    return {
-      email: "",
-      password: "",
-      errors: []
-    };
+    return { email: "", password: "", errors: [] };
   },
   methods: {
     login() {

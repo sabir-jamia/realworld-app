@@ -9,15 +9,18 @@
           </p>
 
           <ul class="error-messages">
-            <li>That email is already taken</li>
+            <li v-for="(error, index) of errors" :key="index">
+              {{ error.message }}
+            </li>
           </ul>
 
-          <form>
+          <form @submit.prevent>
             <fieldset class="form-group">
               <input
                 class="form-control form-control-lg"
                 type="text"
                 placeholder="Your Name"
+                v-model="user.username"
               />
             </fieldset>
             <fieldset class="form-group">
@@ -25,6 +28,7 @@
                 class="form-control form-control-lg"
                 type="text"
                 placeholder="Email"
+                v-model="user.email"
               />
             </fieldset>
             <fieldset class="form-group">
@@ -32,9 +36,13 @@
                 class="form-control form-control-lg"
                 type="password"
                 placeholder="Password"
+                v-model="user.password"
               />
             </fieldset>
-            <button class="btn btn-lg btn-primary pull-xs-right">
+            <button
+              @click="storeUser()"
+              class="btn btn-lg btn-primary pull-xs-right"
+            >
               Sign up
             </button>
           </form>
@@ -43,3 +51,27 @@
     </div>
   </div>
 </template>
+<script>
+export default {
+  name: "register",
+  data() {
+    return {
+      errors: [],
+      user: { username: "", email: "", password: "" }
+    };
+  },
+  methods: {
+    storeUser() {
+      this.$store
+        .dispatch("users/storeUser", { user: this.user })
+        .then(() => {
+          this.errors = [];
+          this.$router.push("/login");
+        })
+        .catch(err => {
+          this.errors.push(err);
+        });
+    }
+  }
+};
+</script>

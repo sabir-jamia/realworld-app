@@ -10,7 +10,7 @@ export default {
     ArticleList
   },
   computed: {
-    ...mapGetters({ articles: "home/articles", profile: "users/profile" })
+    ...mapGetters({ articles: "home/articles", profile: "profile/profile" })
   },
   created() {
     this.$store.dispatch("home/getArticles", {

@@ -11,7 +11,7 @@
                   class="form-control"
                   type="text"
                   placeholder="URL of profile picture"
-                  v-model="user.image"
+                  v-model="currentUser.image"
                 />
               </fieldset>
               <fieldset class="form-group">
@@ -19,7 +19,7 @@
                   class="form-control form-control-lg"
                   type="text"
                   placeholder="Your Name"
-                  v-model="user.username"
+                  v-model="currentUser.username"
                 />
               </fieldset>
               <fieldset class="form-group">
@@ -27,7 +27,7 @@
                   class="form-control form-control-lg"
                   rows="8"
                   placeholder="Short bio about you"
-                  v-model="user.bio"
+                  v-model="currentUser.bio"
                 ></textarea>
               </fieldset>
               <fieldset class="form-group">
@@ -35,7 +35,7 @@
                   class="form-control form-control-lg"
                   type="text"
                   placeholder="Email"
-                  v-model="user.email"
+                  v-model="currentUser.email"
                 />
               </fieldset>
               <fieldset class="form-group">
@@ -43,7 +43,7 @@
                   class="form-control form-control-lg"
                   type="password"
                   placeholder="Password"
-                  v-model="user.password"
+                  v-model="currentUser.password"
                 />
               </fieldset>
               <button
@@ -69,7 +69,7 @@ import { mapGetters } from "vuex";
 export default {
   name: "Settings",
   computed: {
-    ...mapGetters({ user: "users/user" })
+    ...mapGetters({ currentUser: "users/currentUser" })
   },
   methods: {
     updateSettings() {
