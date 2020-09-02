@@ -10,12 +10,12 @@ export default {
     ArticleList
   },
   computed: {
-    ...mapGetters({ articles: "home/articles", profile: "profile/profile" })
+    ...mapGetters({ articles: "home/articles" })
   },
   created() {
     this.$store.dispatch("home/getArticles", {
       page: 1,
-      favorited: this.profile.username
+      favorited: this.$route.params.username
     });
   }
 };

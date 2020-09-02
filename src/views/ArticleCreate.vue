@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     storeArticle() {
-      this.$store.dispatch("articles/storeArticle", this.article).then(() => {
+      this.$store.dispatch("article/storeArticle", this.article).then(() => {
         this.$router.push(`/@${this.username}`);
       });
     }

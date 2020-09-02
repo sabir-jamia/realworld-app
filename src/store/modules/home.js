@@ -20,7 +20,7 @@ const actions = {
     if (payload) {
       const { page, ...rest } = payload;
 
-      uri += page ? `limit=10&offset=${(page - 1) * 10}` : "";
+      uri += page ? `limit=10&offset=${(page - 1) * 10}&` : "";
       uri += Object.entries(rest)
         .map(([prop, value]) => `${prop}=${value}`)
         .join("&");
@@ -57,6 +57,10 @@ const mutations = {
   },
   setArticles(state, { articles }) {
     state.articles = articles;
+  },
+  setArticleInList(state, { article }) {
+    const index = state.articles.findIndex(ar => ar.slug == article.slug);
+    state.articles.splice(index, 1, article);
   }
 };
 

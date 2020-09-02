@@ -49,7 +49,6 @@ export default {
 
   computed: {
     ...mapGetters({
-      currentUser: "users/currentUser",
       isAuthenticated: "users/isAuthenticated",
       article: "article/article",
       comments: "article/comments"
@@ -59,9 +58,10 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("article/getArticle", this.slug).then(() => {
-      this.$store.dispatch("article/getComments", this.article.slug);
-    });
+    Promise.all([
+      this.$store.dispatch("article/getArticle", this.slug),
+      this.$store.dispatch("article/getComments", this.slug)
+    ]);
   },
   methods: {
     parseMarkdown(content = "") {

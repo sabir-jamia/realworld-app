@@ -16,9 +16,12 @@
               </router-link>
             </div>
             <div v-else>
-              <button class="btn btn-sm btn-outline-secondary action-btn">
-                <i class="ion-plus-round"></i>
-                &nbsp; Follow {{ profile.username }}
+              <button
+                @click="toggleFollow"
+                class="btn btn-sm btn-outline-secondary action-btn"
+              >
+                <i class="ion-plus-round"></i>&nbsp;
+                <span v-text="followUserLabel"></span>
               </button>
             </div>
           </div>
@@ -62,16 +65,38 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "Profile",
-  created() {
-    this.$store.dispatch("profile/getProfile", this.$route.params);
-  },
   computed: {
     ...mapGetters({
       currentUser: "users/currentUser",
+      isAuthenticated: "users/isAuthenticated",
       profile: "profile/profile"
     }),
     isCurrentUser() {
       return this.profile.username == this.currentUser.username;
+    },
+    followUserLabel() {
+      return `${this.profile.following ? "Unfollow" : "Follow"} ${
+        this.profile.username
+      }`;
+    }
+  },
+  methods: {
+    toggleFollow() {
+      if (!this.isAuthenticated) {
+        return this.$router.push("/login");
+      }
+      const action = this.profile.following
+        ? "profile/unfollow"
+        : "profile/follow";
+      this.$store.dispatch(action, { username: this.profile.username });
+    }
+  },
+  created() {
+    this.$store.dispatch("profile/getProfile", this.$route.params);
+  },
+  watch: {
+    $route(to) {
+      this.$store.dispatch("profile/getProfile", to.params);
     }
   }
 };

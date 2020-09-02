@@ -1,13 +1,15 @@
 import { api } from "../api";
 
+const initArticle = {
+  title: "",
+  description: "",
+  body: "",
+  tagList: [],
+  author: {}
+};
+
 const state = {
-  article: {
-    title: "",
-    description: "",
-    body: "",
-    tagList: [],
-    author: {}
-  },
+  article: initArticle,
   comments: []
 };
 
@@ -23,6 +25,12 @@ const getters = {
 const actions = {
   async storeArticle({ commit }, payload) {
     const response = await api.post("/articles", { article: payload });
+    commit("setArticle", response.data);
+  },
+
+  async updateArticle({ commit }, payload) {
+    const { slug } = payload;
+    const response = await api.put(`/articles/${slug}`, { article: payload });
     commit("setArticle", response.data);
   },
 
@@ -46,12 +54,24 @@ const actions = {
     const { slug } = payload;
     const response = await api.post(`/articles/${slug}/favorite`);
     commit("setArticle", response.data);
+    commit("home/setArticleInList", response.data, { root: true });
   },
 
   async removeFavorite({ commit }, payload) {
     const { slug } = payload;
     const response = await api.delete(`/articles/${slug}/favorite`);
     commit("setArticle", response.data);
+    commit("home/setArticleInList", response.data, { root: true });
+  },
+
+  async deleteArticle({ dispatch }, payload) {
+    const { slug } = payload;
+    api.delete(`/articles/${slug}`);
+    dispatch("resetArticleState");
+  },
+
+  resetArticleState({ commit }) {
+    commit("setArticle", { article: initArticle });
   }
 };
 

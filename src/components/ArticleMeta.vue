@@ -9,7 +9,11 @@
       </router-link>
       <span class="date">{{ formatDate(article.createdAt) }}</span>
     </div>
-    <ArticleActions :article="article" :profile="profile" />
+    <ArticleActions
+      :article="article"
+      :profile="profile"
+      :canModify="isCurrentUser"
+    />
   </div>
 </template>
 
@@ -17,6 +21,7 @@
 import dayjs from "dayjs";
 import AdvancedFormat from "dayjs/plugin/advancedFormat";
 import ArticleActions from "./ArticleActions";
+import { mapGetters } from "vuex";
 
 dayjs.extend(AdvancedFormat);
 
@@ -25,8 +30,12 @@ export default {
   components: { ArticleActions },
   props: ["article"],
   computed: {
+    ...mapGetters({ currentUser: "users/currentUser" }),
     profile() {
       return this.article.author;
+    },
+    isCurrentUser() {
+      return this.profile.username == this.currentUser.username;
     }
   },
   methods: {
